@@ -5,7 +5,7 @@ const Pool = require('pg').Pool;
 
 
 
-async function uploadCSVRows(filePath, poolData, queryData) {
+async function uploadCSVRows(filePath, poolData, queryData, isLoggingRows) {
 
   const pool = new Pool({
     host: poolData.host,
@@ -30,9 +30,8 @@ async function uploadCSVRows(filePath, poolData, queryData) {
   const client = await pool.connect()
   try {
     for (const row of csvData) {
-      // console.log(row)
+      if(isLoggingRows) console.log(row);
       const query = `INSERT INTO ${queryData.tableName} (${queryData.columnNames}) VALUES (${values})`;
-      // console.log(query)
       const res = await client.query(query, row);
       rowCount += 1;
     }

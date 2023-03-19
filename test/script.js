@@ -1,4 +1,4 @@
-const uploadCSVRows = require('tiny-postgres-uploader');
+const tpul = require('tiny-postgres-uploader');
 
 
 const poolData = {
@@ -15,4 +15,4 @@ const queryData = {
 }
 
 
-uploadCSVRows('./random2.csv', poolData, queryData);
+tpul('./random2.csv', poolData, queryData, false);
