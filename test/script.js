@@ -15,4 +15,4 @@ const queryData = {
 }
 
 
-tpul('./random2.csv', poolData, queryData, false);
+tpul('../../random.csv', poolData, queryData, false);
