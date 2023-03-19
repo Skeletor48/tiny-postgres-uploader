@@ -1,0 +1,30 @@
+{
+  "name": "tiny-postgres-uploader",
+  "version": "1.0.0",
+  "description": "A little (and kinda slow) solution to upload rows from a csv file to a postgres table.",
+  "main": "pgs.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Skeletor48/tiny-postgres-uploader.git"
+  },
+  "keywords": [
+    "postgres",
+    "postgresql",
+    "row",
+    "upload"
+  ],
+  "author": "Skeletor48",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Skeletor48/tiny-postgres-uploader/issues"
+  },
+  "homepage": "https://github.com/Skeletor48/tiny-postgres-uploader#readme",
+  "dependencies": {
+    "csv": "^6.2.8",
+    "get-stream": "^6.0.1",
+    "pg": "^8.10.0"
+  }
+}
