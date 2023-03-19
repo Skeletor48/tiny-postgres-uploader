@@ -15,23 +15,36 @@ async function uploadCSVRows(filePath, poolData, queryData) {
     port: poolData.port,
   });
 
-  const values = Array.from({length:queryData.columnNames.length}, (v, i) => `$${i+1}`);
+  const values = Array.from({
+    length: queryData.columnNames.length
+  }, (v, i) => `$${i+1}`);
 
-  const parseStream = csv.parse({ delimiter: ',' });
+  const parseStream = csv.parse({
+    delimiter: ','
+  });
   const csvData = await getStream.array(fs.createReadStream(filePath).pipe(parseStream));
   csvData.shift();
 
-  pool.connect(async (err, client, done) => {
-    if (err) throw err;
+
+  let rowCount = 0;
+  const client = await pool.connect()
+  try {
     for (const row of csvData) {
       // console.log(row)
       const query = `INSERT INTO ${queryData.tableName} (${queryData.columnNames}) VALUES (${values})`;
       // console.log(query)
-      await client.query(query, row);
+      const res = await client.query(query, row);
+      rowCount += 1;
     }
-  })
+  } catch (err) {
+    rowCount += 0;
+    console.log(err.stack);
+  } finally {
+    console.log(`${rowCount} row added`);
+    await client.release();
+    await pool.end()
+    console.log('Pool has been closed')
+  }
 }
 
 module.exports = uploadCSVRows;
-// readCSVData('random.csv');
-
