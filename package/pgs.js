@@ -5,7 +5,7 @@ const Pool = require('pg').Pool;
 
 
 
-async function uploadCSVRows(filePath, poolData) {
+async function uploadCSVRows(filePath, poolData, queryData) {
 
   const pool = new Pool({
     host: poolData.host,
@@ -15,6 +15,8 @@ async function uploadCSVRows(filePath, poolData) {
     port: poolData.port,
   });
 
+  const values = Array.from({length:queryData.columnNames.length}, (v, i) => `$${i+1}`);
+
   const parseStream = csv.parse({ delimiter: ',' });
   const csvData = await getStream.array(fs.createReadStream(filePath).pipe(parseStream));
   csvData.shift();
@@ -23,7 +25,7 @@ async function uploadCSVRows(filePath, poolData) {
     if (err) throw err;
     for (const row of csvData) {
       // console.log(row)
-      const query = "INSERT INTO random (random1, random2, random3, random4, random5, random6, random7, random8, random9, random10) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)";
+      const query = `INSERT INTO ${queryData.tableName} (${queryData.columnNames}) VALUES (${values})`;
       // console.log(query)
       await client.query(query, row);
     }
