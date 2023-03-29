@@ -21,7 +21,7 @@ async function uploadCSVRows(filePath, poolData, queryData, isLoggingRows) {
   }, (v, i) => `$${i+1}`);
 
   const parseStream = csv.parse({
-    delimiter: ','
+    delimiter: queryData.delimiter
   });
   const csvData = await getStream.array(fs.createReadStream(filePath).pipe(parseStream));
   csvData.shift();
