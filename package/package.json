@@ -1,6 +1,6 @@
 {
   "name": "tiny-postgres-uploader",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A little (and kinda slow) solution to upload rows from a csv file to a postgres table.",
   "main": "tpul.js",
   "scripts": {
