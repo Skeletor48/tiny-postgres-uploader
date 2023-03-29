@@ -41,7 +41,6 @@ async function uploadCSVRows(filePath, poolData, queryData, isLoggingRows) {
       rowCount += 1;
     }
   } catch (err) {
-    rowCount += 0;
     console.log(err.stack);
   } finally {
     if (!isLoggingRows) loadingSpinner.stop();
